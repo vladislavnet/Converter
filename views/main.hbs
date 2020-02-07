@@ -1,0 +1,66 @@
+<div>
+    <form>
+        <div class="form-row">
+            <div class="form-group select-media">
+                <select class="form-control" id="valuteIn" onchange="convert(this)">
+                    {{#each Valute}}
+                        <option value="{{Value}}">{{Name}}</option>
+                    {{/each}}
+                </select>
+                <input class="form-control" id="textIn" placeholder="100" oninput="convert(this)">
+            </div>
+
+              <div class="form-group select-media">
+                <select class="form-control" id="valuteOut" onchange="convert(this)">
+                    {{#each Valute}}
+                        <option value="{{Value}}">{{Name}}</option>
+                    {{/each}}
+                </select>
+                <input class="form-control" id="textOut" placeholder="100" oninput="convert(this)">
+            </div>
+        </div>
+    </form>
+</div>   
+
+<div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="table-none table-display">#</th>
+                <th class="table-none table-display">Название</th>
+                <th class="table-display">Обозначение</th>
+                <th class="table-display">Курс у рублю</th>
+                <th class="table-none table-display">Рубль к валюте</th>
+            </tr>
+            <tbody>
+                {{#each Valute}}
+                <tr class="text-tr">
+                    <td class="table-none table-display">{{this.NumCode}}</td>
+                    <td class="table-none table-display">{{this.Name}}</td>
+                    <td class="table-display">{{this.CharCode}}</td>
+                    <td class="table-display">{{this.Value}}</td>
+                    <td class="table-none table-display">{{this.DeValue}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </thead>
+    </table>
+</div>
+
+<script>
+    let list = document.getElementById("valuteIn").children;
+    list.item(list.length - 1).setAttribute("selected", "selected");
+
+    function convert(obj) {
+        let valuteIn = document.getElementById("valuteIn");
+        let valuteOut = document.getElementById("valuteOut");
+        let textIn = document.getElementById("textIn");
+        let textOut = document.getElementById("textOut");
+
+        if(obj == valuteIn || obj == textIn) {
+            textOut.value = textIn.value * valuteIn.value / valuteOut.value;
+        } else {
+            textIn.value = textOut.value * valuteOut.value / valuteIn.value;
+        }
+    }
+</script>
